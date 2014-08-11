@@ -1,9 +1,21 @@
 # coding: utf-8
 """
-sentry_statsd.forms
+sentry_pagerduty.forms
 """
 from django import forms
 
+COUNT_CHOICES = (
+    '1',
+    '2',
+    '5',
+    '10',
+    '25',
+    '50',
+    '100',
+    '250',
+    '500',
+    '1000'
+)
 
 class PagerDutyConfigForm(forms.Form):
     api_key = forms.CharField(
@@ -19,4 +31,10 @@ class PagerDutyConfigForm(forms.Form):
     domain_name = forms.CharField(
         max_length=255,
         help_text="Domain Name of your pagerduty instance (e.g. 'sterling_cooper')"
+    )
+
+    instance_counts = forms.MultipleChoiceField(
+        choices=COUNT_CHOICES,
+        default=COUNT_CHOICES,
+        help_text="Trigger incidents at these group counts",
     )

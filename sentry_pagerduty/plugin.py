@@ -36,6 +36,9 @@ class PagerDutyPlugin(Plugin):
         api_key = self.get_option('api_key', group.project)
         domain_name = self.get_option('domain_name', group.project)
         service_key = self.get_option('service_key', group.project)
+        counts = map(int, self.get_option('instance_counts', group.project))
+        if group.times_seen not in counts:
+            return
 
         client = pygerduty.PagerDuty(domain_name, api_key)
         client.trigger_incident(service_key, event.message)
