@@ -12,7 +12,7 @@ f.close()
 
 setup(
     name='sentry-pagerduty',
-    version='0.0.2',
+    version='0.0.2-mmf',
     author='Depop developers',
     author_email='dev@depop.com',
     url='https://github.com/depop/sentry-pagerduty',
@@ -33,7 +33,8 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Framework :: Django',
-        'Topic :: Software Development'
+        'Topic :: Software Development',
+        'FOR INTERNAL RELEASE ONLY', # To prevent accidental upload to pypi
     ],
     keywords='sentry pagerduty',
 )
