@@ -41,4 +41,4 @@ class PagerDutyPlugin(Plugin):
             return
 
         client = pygerduty.PagerDuty(domain_name, api_key)
-        client.trigger_incident(service_key, event.message)
+        client.trigger_incident(service_key, event.message, incident_key='sentry-%i' % group.id)
