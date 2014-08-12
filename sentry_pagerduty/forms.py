@@ -5,16 +5,16 @@ sentry_pagerduty.forms
 from django import forms
 
 COUNT_CHOICES = (
-    '1',
-    '2',
-    '5',
-    '10',
-    '25',
-    '50',
-    '100',
-    '250',
-    '500',
-    '1000'
+    ('1', 1),
+    ('2', 2),
+    ('5', 5),
+    ('10', 10),
+    ('25', 25),
+    ('50', 50),
+    ('100', 100),
+    ('250', 250),
+    ('500', 500),
+    ('1000', 1000),
 )
 
 class PagerDutyConfigForm(forms.Form):
@@ -33,8 +33,8 @@ class PagerDutyConfigForm(forms.Form):
         help_text="Domain Name of your pagerduty instance (e.g. 'sterling_cooper')"
     )
 
-    instance_counts = forms.MultipleChoiceField(
+    instance_counts = forms.TypedMultipleChoiceField(
         choices=COUNT_CHOICES,
-        default=COUNT_CHOICES,
+        coerce=int,
         help_text="Trigger incidents at these group counts",
     )
