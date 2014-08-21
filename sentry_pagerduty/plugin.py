@@ -29,16 +29,31 @@ class PagerDutyPlugin(Plugin):
                 params('service_key', project) and
                 params('domain_name', project))
 
+    def on_alert(self, alert, **kwargs):
+        if not self.is_configured(alert.project):
+            return
+
+        self.trigger_incident(
+            alert.project,
+            alert.message,
+            incident_key='sentry-alert-%i' % alert.id
+        )
+
     def post_process(self, group, event, is_new, is_sample, **kwargs):
         if not self.is_configured(group.project):
             return
 
-        api_key = self.get_option('api_key', group.project)
-        domain_name = self.get_option('domain_name', group.project)
-        service_key = self.get_option('service_key', group.project)
-        counts = map(int, self.get_option('instance_counts', group.project))
-        if group.times_seen not in counts:
-            return
+        self.trigger_incident(
+            group.project,
+            event.message,
+            incident_key='sentry-%i' % group.id
+        )
+
+    def trigger_incident(self, project, message, incident_key):
+        api_key = self.get_option('api_key', project)
+        domain_name = self.get_option('domain_name', project)
+        service_key = self.get_option('service_key', project)
 
         client = pygerduty.PagerDuty(domain_name, api_key)
-        client.trigger_incident(service_key, event.message, incident_key='sentry-%i' % group.id)
+        client.trigger_incident(service_key, message, incident_key=incident_key)
+

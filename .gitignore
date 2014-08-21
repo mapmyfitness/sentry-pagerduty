@@ -8,3 +8,6 @@
 # Some editors files
 ._*
 *.swp
+*.egg-info
+
+dist
