@@ -1,10 +1,10 @@
 import sentry_pagerduty
 import pygerduty
 from sentry_pagerduty.forms import PagerDutyConfigForm
-from sentry.plugins import Plugin
+from sentry.plugins.bases.notify import NotifyPlugin
 
 
-class PagerDutyPlugin(Plugin):
+class PagerDutyPlugin(NotifyPlugin):
     """
     Sentry plugin to send errors stats to Pagerduty.
     """
@@ -33,14 +33,20 @@ class PagerDutyPlugin(Plugin):
         if not self.is_configured(alert.project):
             return
 
+        if not self.get_option('notify_on_alert'):
+            return
+
         self.trigger_incident(
             alert.project,
             alert.message,
             incident_key='sentry-alert-%i' % alert.id
         )
 
-    def post_process(self, group, event, is_new, is_sample, **kwargs):
+    def notify_users(self, group, event, fail_silently=False):
         if not self.is_configured(group.project):
+            return
+
+        if not self.get_option('notify_on_event'):
             return
 
         self.trigger_incident(
