@@ -18,5 +18,5 @@ class PagerDutyConfigForm(forms.Form):
         max_length=255,
         help_text="Domain Name of your pagerduty instance (e.g. 'sterling_cooper')"
     )
-    notify_on_alert = forms.BooleanField()
-    notify_on_event = forms.BooleanField()
+    notify_on_alert = forms.BooleanField(required=False)
+    notify_on_event = forms.BooleanField(required=False)

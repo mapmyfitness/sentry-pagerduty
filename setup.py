@@ -12,7 +12,7 @@ f.close()
 
 setup(
     name='sentry-pagerduty',
-    version='0.1.1',
+    version='0.1.2',
     author='Depop developers',
     author_email='dev@depop.com',
     url='https://github.com/depop/sentry-pagerduty',
