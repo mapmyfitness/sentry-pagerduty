@@ -12,7 +12,7 @@ f.close()
 
 setup(
     name='sentry-pagerduty',
-    version='0.1.2',
+    version='0.2.0',
     author='Depop developers',
     author_email='dev@depop.com',
     url='https://github.com/depop/sentry-pagerduty',
@@ -21,6 +21,9 @@ setup(
     packages=find_packages(),
     install_requires=install_requires,
     entry_points={
+        'sentry.apps': [
+            'sentry_pagerduty = sentry_pagerduty',
+        ],
         'sentry.plugins': [
             'sentry_pagerduty = sentry_pagerduty.plugin:PagerDutyPlugin'
         ],

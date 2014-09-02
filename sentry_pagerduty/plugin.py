@@ -33,7 +33,7 @@ class PagerDutyPlugin(NotifyPlugin):
         if not self.is_configured(alert.project):
             return
 
-        if not self.get_option('notify_on_alert'):
+        if not self.get_option('notify_on_alert', alert.project):
             return
 
         self.trigger_incident(
@@ -46,7 +46,7 @@ class PagerDutyPlugin(NotifyPlugin):
         if not self.is_configured(group.project):
             return
 
-        if not self.get_option('notify_on_event'):
+        if not self.get_option('notify_on_event', group.project):
             return
 
         self.trigger_incident(
